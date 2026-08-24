@@ -168,21 +168,28 @@ def parse_activity_text(db: Session, text: str) -> AIParseResponse:
                 )
             )
 
-        # Build final confirmation message if not provided or override
+        # Build final confirmation message
         conf_msg = result_data.get("confirmation_message", "")
-        if needs_confirmation:
+        
+        # Only require hard confirmation if entity or action are completely missing
+        critical_missing = bool(unknown_entities or unknown_actions)
+        needs_confirmation = critical_missing
+
+        if unknown_employees and not critical_missing:
+            names_str = ", ".join(unknown_employees)
+            conf_msg = f"تم استخراج الإنجازات بنجاح. لاحظ أن ({names_str}) اسم جديد وسيتم تسجيله تلقائياً عند الضغط على تأكيد وحفظ."
+        elif critical_missing:
             msg_parts = []
-            if unknown_employees:
-                msg_parts.append(f"الموظفين غير المعرفين: {', '.join(unknown_employees)}")
-            if similar_employees:
-                for k, v in similar_employees.items():
-                    msg_parts.append(f"هل تقصد بـ '{k}': { ' أو '.join(v) }؟")
             if unknown_entities:
-                msg_parts.append(f"نوع إنجاز غير معروف: {', '.join(unknown_entities)}. هل ترغب في إضافته؟")
-            conf_msg = " | ".join(msg_parts) if msg_parts else "يرجى تأكيد بعض التفاصيل غير الواضحة."
+                msg_parts.append(f"نوع إنجاز غير معروف: {', '.join(unknown_entities)}")
+            if unknown_actions:
+                msg_parts.append(f"نوع إجراء غير معروف: {', '.join(unknown_actions)}")
+            conf_msg = " | ".join(msg_parts)
+        else:
+            conf_msg = "رائع جداً! تم استخراج جميع الأنشطة المذكورة بنجاح."
 
         return AIParseResponse(
-            success=not needs_confirmation,
+            success=True,
             activities=parsed_activities,
             needs_confirmation=needs_confirmation,
             confirmation_message=conf_msg,

@@ -133,7 +133,8 @@ class TaskWithAnalytics(TaskResponse):
 
 # ─── Daily Activity ──────────────────────────────────────
 class ActivityCreate(BaseModel):
-    employee_id: int
+    employee_id: Optional[int] = None
+    employee_name: Optional[str] = None
     task_id: Optional[int] = None
     entity_type_id: int
     action_type_id: int

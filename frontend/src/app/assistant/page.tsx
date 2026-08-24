@@ -180,6 +180,7 @@ export default function AssistantPage() {
     try {
       const activitiesToSave = pendingConfirm.activities.map(act => ({
         employee_id: act.employee_id,
+        employee_name: act.employee_name,
         entity_type_id: act.entity_id,
         action_type_id: act.action_id,
         quantity: act.quantity,

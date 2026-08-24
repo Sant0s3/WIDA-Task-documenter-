@@ -52,11 +52,23 @@ def create_activity(db: Session, data: ActivityCreate) -> DailyActivity:
 
 
 def create_activities_bulk(db: Session, activities: List[ActivityCreate]) -> List[DailyActivity]:
-    """Create multiple activities at once (from AI parsing)."""
+    """Create multiple activities at once (from AI parsing), auto-creating missing employees if needed."""
+    from app.services import employee_service
     created = []
     for data in activities:
+        emp_id = data.employee_id
+        if not emp_id and data.employee_name:
+            # Auto-create employee if not found
+            emp = employee_service.find_employee_by_name(db, data.employee_name)
+            if not emp:
+                emp = employee_service.create_employee(db, name=data.employee_name, role="designer")
+            emp_id = emp.id
+
+        if not emp_id:
+            continue
+
         activity = DailyActivity(
-            employee_id=data.employee_id,
+            employee_id=emp_id,
             task_id=data.task_id,
             entity_type_id=data.entity_type_id,
             action_type_id=data.action_type_id,
