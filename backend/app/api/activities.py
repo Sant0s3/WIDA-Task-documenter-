@@ -45,6 +45,7 @@ def list_activities(
             action_type_id=a.action_type_id,
             action_type_name=a.action_type.display_name if a.action_type else None,
             quantity=a.quantity,
+            unit=a.unit or "items",
             activity_date=a.activity_date,
             notes=a.notes,
             source_text=a.source_text,

@@ -11,7 +11,8 @@ You MUST output your response strictly as a JSON object matching this schema:
       "employee_name": "extracted name",
       "entity": "standardised entity",
       "action": "standardised action",
-      "quantity": integer
+      "quantity": integer,
+      "unit": "unit of measurement: 'items' for images/designs count, 'seconds' for seconds of video/animation, 'minutes' for minutes of video/animation"
     }
   ],
   "needs_confirmation": boolean,
@@ -25,8 +26,12 @@ Guidelines:
 1. Match employee names to the list of KNOWN EMPLOYEES. If similar names exist, map them or flag them. If not found, list them in "unknown_employees".
 2. Match entities to KNOWN ENTITIES (names/keys). If not found, list them in "unknown_entities".
 3. Match actions to KNOWN ACTIONS (names/keys). If not found, list them in "unknown_actions".
-4. If there are unknown items, set "needs_confirmation" to true.
-5. In "confirmation_message", write a polite Arabic summary of what was matched or what needs clarification.
+4. Determine the unit of measurement carefully:
+   - If seconds/ثانية/ثواني are specified (e.g. 30 ثانية), set unit: "seconds" and quantity: 30.
+   - If minutes/دقيقة/دقائق are specified (e.g. 1 دقيقة), set unit: "minutes" and quantity: 1.
+   - If count/pieces/designs are specified (e.g. 2 تصميم, 4 صور), set unit: "items" and quantity: 2.
+5. If there are unknown items, set "needs_confirmation" to true.
+6. In "confirmation_message", write a polite Arabic summary of what was matched or what needs clarification.
 
 List of Known Employees:
 {employees_list}

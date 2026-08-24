@@ -99,6 +99,7 @@ class DailyActivity(Base):
     entity_type_id = Column(Integer, ForeignKey("entity_types.id"), nullable=False)
     action_type_id = Column(Integer, ForeignKey("action_types.id"), nullable=False)
     quantity = Column(Integer, default=1)
+    unit = Column(String(20), default="items")  # "items" (عدد), "seconds" (ثواني), "minutes" (دقائق)
     activity_date = Column(Date, default=date.today)
     notes = Column(Text, nullable=True)
     source_text = Column(Text, nullable=True)  # Original Arabic/English input

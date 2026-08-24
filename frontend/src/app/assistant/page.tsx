@@ -184,6 +184,7 @@ export default function AssistantPage() {
         entity_type_id: act.entity_id,
         action_type_id: act.action_id,
         quantity: act.quantity,
+        unit: act.unit || 'items',
         source_text: pendingSourceText
       }));
 
@@ -399,7 +400,7 @@ export default function AssistantPage() {
                           </p>
                         </div>
                         <span className="font-extrabold text-[#6e4fdc] text-xs px-2.5 py-1 rounded-xl bg-[#f3ecfa] border border-[#e3d7ed]">
-                          x{act.quantity}
+                          {act.unit === 'seconds' ? `${act.quantity} ثانية` : act.unit === 'minutes' ? `${act.quantity} دقيقة` : `x${act.quantity}`}
                         </span>
                       </div>
                     );

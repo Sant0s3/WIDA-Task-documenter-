@@ -275,7 +275,7 @@ export default function TasksPage() {
                           </div>
                           <div className="flex items-center gap-2">
                             <span className="px-2.5 py-1 rounded-lg bg-wida-primary/15 text-wida-primary text-sm font-bold">
-                              x{act.quantity}
+                              {act.unit === 'seconds' ? `${act.quantity} ثانية` : act.unit === 'minutes' ? `${act.quantity} دقيقة` : `x${act.quantity}`}
                             </span>
                             <button
                               onClick={() => handleDelete(act.id)}

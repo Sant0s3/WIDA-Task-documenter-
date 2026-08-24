@@ -20,16 +20,19 @@ export function generateWidaPDF(activities: DailyActivity[], periodName: string 
     <tr>
       <td colspan="4" style="text-align: center; padding: 18px; color: #666; font-size: 12px;">لا توجد إنجازات مسجلة لهذه الفترة بعد</td>
     </tr>
-  ` : activities.map((a) => `
+  ` : activities.map((a) => {
+    const unitLabel = a.unit === 'seconds' ? 'ثانية' : a.unit === 'minutes' ? 'دقيقة' : 'إنجاز';
+    return `
     <tr style="border-bottom: 1px solid #111111;">
       <td style="padding: 10px 14px; font-weight: 700; color: #111111; border-left: 1px solid #111111; vertical-align: top;">${a.employee_name || 'غير محدد'}</td>
       <td style="padding: 10px 14px; color: #111111; font-weight: 600; border-left: 1px solid #111111; vertical-align: top;">
         تم ${a.action_type_name || ''} (${a.entity_type_name || ''})
       </td>
-      <td style="padding: 10px 14px; font-weight: 800; color: #581c87; text-align: center; border-left: 1px solid #111111; vertical-align: top;">${a.quantity}</td>
+      <td style="padding: 10px 14px; font-weight: 800; color: #581c87; text-align: center; border-left: 1px solid #111111; vertical-align: top;">${a.quantity} ${unitLabel}</td>
       <td style="padding: 10px 14px; color: #333333; text-align: center; font-size: 11px; vertical-align: top;">${a.activity_date}</td>
     </tr>
-  `).join('');
+  `;
+  }).join('');
 
   const htmlContent = `
     <!DOCTYPE html>

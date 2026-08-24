@@ -121,6 +121,9 @@ def parse_activity_text(db: Session, text: str) -> AIParseResponse:
             entity_name = act.get("entity")
             action_name = act.get("action")
             qty = act.get("quantity", 1)
+            unit_val = act.get("unit", "items")
+            if unit_val not in ["items", "seconds", "minutes"]:
+                unit_val = "items"
 
             # Match employee
             emp = employee_service.find_employee_by_name(db, emp_name)
@@ -164,7 +167,8 @@ def parse_activity_text(db: Session, text: str) -> AIParseResponse:
                     entity_id=ent_id,
                     action=action_name,
                     action_id=act_id,
-                    quantity=qty
+                    quantity=qty,
+                    unit=unit_val
                 )
             )
 

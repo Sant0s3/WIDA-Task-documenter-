@@ -139,6 +139,7 @@ class ActivityCreate(BaseModel):
     entity_type_id: int
     action_type_id: int
     quantity: int = 1
+    unit: Optional[str] = "items"  # "items", "seconds", "minutes"
     activity_date: Optional[date] = None
     notes: Optional[str] = None
     source_text: Optional[str] = None
@@ -153,6 +154,7 @@ class ActivityResponse(BaseModel):
     action_type_id: int
     action_type_name: Optional[str] = None
     quantity: int
+    unit: Optional[str] = "items"
     activity_date: date
     notes: Optional[str]
     source_text: Optional[str]
@@ -177,6 +179,7 @@ class ParsedActivity(BaseModel):
     action: str
     action_id: Optional[int] = None
     quantity: int = 1
+    unit: Optional[str] = "items"  # "items", "seconds", "minutes"
 
 class AIParseResponse(BaseModel):
     success: bool

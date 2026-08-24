@@ -57,6 +57,7 @@ export interface DailyActivity {
   action_type_id: number;
   action_type_name?: string;
   quantity: number;
+  unit?: 'items' | 'seconds' | 'minutes';
   activity_date: string;
   notes?: string;
   source_text?: string;
@@ -120,6 +121,7 @@ export interface ParsedActivity {
   action: string;
   action_id?: number;
   quantity: number;
+  unit?: 'items' | 'seconds' | 'minutes';
 }
 
 export interface AIParseResponse {

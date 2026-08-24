@@ -41,6 +41,7 @@ def create_activity(db: Session, data: ActivityCreate) -> DailyActivity:
         entity_type_id=data.entity_type_id,
         action_type_id=data.action_type_id,
         quantity=data.quantity,
+        unit=data.unit or "items",
         activity_date=data.activity_date or date.today(),
         notes=data.notes,
         source_text=data.source_text,
@@ -58,20 +59,17 @@ def create_activities_bulk(db: Session, activities: List[ActivityCreate]) -> Lis
     for data in activities:
         emp_id = data.employee_id
         if not emp_id and data.employee_name:
-            # Auto-create employee if not found
-            emp = employee_service.find_employee_by_name(db, data.employee_name)
-            if not emp:
-                # Check entity/action to determine role (animator vs designer)
-                role = "designer"
-                if data.entity_type_id:
-                    ent = db.query(EntityType).filter(EntityType.id == data.entity_type_id).first()
-                    if ent and ent.name in ["video", "animation"]:
-                        role = "animator"
-                if data.action_type_id:
-                    act = db.query(ActionType).filter(ActionType.id == data.action_type_id).first()
-                    if act and act.name in ["animated"]:
-                        role = "animator"
-                emp = employee_service.create_employee(db, name=data.employee_name, role=role)
+            # Check entity/action to determine role (animator vs designer)
+            role = "designer"
+            if data.entity_type_id:
+                ent = db.query(EntityType).filter(EntityType.id == data.entity_type_id).first()
+                if ent and ent.name in ["video", "animation"]:
+                    role = "animator"
+            if data.action_type_id:
+                act = db.query(ActionType).filter(ActionType.id == data.action_type_id).first()
+                if act and act.name in ["animated"]:
+                    role = "animator"
+            emp = employee_service.create_employee(db, name=data.employee_name, role=role)
             emp_id = emp.id
 
         if not emp_id:
@@ -83,6 +81,7 @@ def create_activities_bulk(db: Session, activities: List[ActivityCreate]) -> Lis
             entity_type_id=data.entity_type_id,
             action_type_id=data.action_type_id,
             quantity=data.quantity,
+            unit=data.unit or "items",
             activity_date=data.activity_date or date.today(),
             notes=data.notes,
             source_text=data.source_text,
