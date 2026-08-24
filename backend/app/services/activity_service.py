@@ -61,7 +61,17 @@ def create_activities_bulk(db: Session, activities: List[ActivityCreate]) -> Lis
             # Auto-create employee if not found
             emp = employee_service.find_employee_by_name(db, data.employee_name)
             if not emp:
-                emp = employee_service.create_employee(db, name=data.employee_name, role="designer")
+                # Check entity/action to determine role (animator vs designer)
+                role = "designer"
+                if data.entity_type_id:
+                    ent = db.query(EntityType).filter(EntityType.id == data.entity_type_id).first()
+                    if ent and ent.name in ["video", "animation"]:
+                        role = "animator"
+                if data.action_type_id:
+                    act = db.query(ActionType).filter(ActionType.id == data.action_type_id).first()
+                    if act and act.name in ["animated"]:
+                        role = "animator"
+                emp = employee_service.create_employee(db, name=data.employee_name, role=role)
             emp_id = emp.id
 
         if not emp_id:

@@ -177,7 +177,7 @@ def parse_activity_text(db: Session, text: str) -> AIParseResponse:
 
         if unknown_employees and not critical_missing:
             names_str = ", ".join(unknown_employees)
-            conf_msg = f"تم استخراج الإنجازات بنجاح. لاحظ أن ({names_str}) اسم جديد وسيتم تسجيله تلقائياً عند الضغط على تأكيد وحفظ."
+            conf_msg = f"تم استخراج الإنجازات بنجاح. سيتم إضافة ({names_str}) تلقائياً كـ (مصمم Designer أو محرك Animator بناءً على نوع العمل) عند التثبيت."
         elif critical_missing:
             msg_parts = []
             if unknown_entities:
