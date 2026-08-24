@@ -265,28 +265,35 @@ export default function TasksPage() {
                       <div key={act.id} className="glass-card p-5 border border-wida-border hover:border-wida-primary/30 transition-all group">
                         <div className="flex justify-between items-start">
                           <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-xl bg-wida-surface flex items-center justify-center text-xs font-bold text-wida-accent border border-wida-border">
+                            <div className="w-10 h-10 rounded-2xl bg-wida-primary/10 border border-wida-primary/20 flex items-center justify-center text-xs font-bold text-wida-accent">
                               {act.employee_name?.slice(0, 2) || '??'}
                             </div>
                             <div>
                               <p className="text-sm font-bold text-white">{act.employee_name}</p>
-                              <p className="text-[10px] text-wida-text-muted mt-0.5">{act.action_type_name} {act.entity_type_name}</p>
+                              <p className="text-xs text-wida-accent font-semibold mt-0.5">
+                                تم {act.action_type_name} ({act.entity_type_name})
+                              </p>
                             </div>
                           </div>
                           <div className="flex items-center gap-2">
-                            <span className="px-2.5 py-1 rounded-lg bg-wida-primary/15 text-wida-primary text-sm font-bold">
-                              {act.unit === 'seconds' ? `${act.quantity} ثانية` : act.unit === 'minutes' ? `${act.quantity} دقيقة` : `x${act.quantity}`}
+                            <span className="px-3 py-1 rounded-xl bg-wida-primary/20 text-wida-accent text-xs font-extrabold border border-wida-primary/30">
+                              {act.unit === 'seconds' ? `${act.quantity} ثانية` : act.unit === 'minutes' ? `${act.quantity} دقيقة` : `${act.quantity} عنصر`}
                             </span>
                             <button
                               onClick={() => handleDelete(act.id)}
                               className="p-1.5 rounded-lg opacity-0 group-hover:opacity-100 hover:bg-wida-danger/15 text-wida-text-muted hover:text-wida-danger transition-all"
+                              title="حذف السجل"
                             >
-                              <Trash2 size={12} />
+                              <Trash2 size={13} />
                             </button>
                           </div>
                         </div>
-                        {act.notes && (
-                          <p className="mt-3 text-xs text-wida-text-muted border-t border-wida-border/30 pt-2.5">{act.notes}</p>
+                        
+                        {(act.source_text || act.notes) && (
+                          <div className="mt-3.5 pt-3 border-t border-wida-border/40 text-[11px] text-wida-text-muted flex items-center gap-1.5 bg-wida-surface/50 p-2.5 rounded-xl">
+                            <span className="font-bold text-wida-primary/80">النص المدخل:</span>
+                            <span className="italic">"{act.source_text || act.notes}"</span>
+                          </div>
                         )}
                       </div>
                     ))}
