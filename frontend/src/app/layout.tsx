@@ -50,7 +50,9 @@ export default function RootLayout({
       <head>
         <title>WIDA</title>
         <meta name="description" content="وايدا AI - نظام تسجيل الإنجازات والإنتاجية اليومية" />
-        <link rel="icon" href="/WidaLOGO.png" type="image/png" />
+        <link rel="icon" href="/WidaLOGO.png" sizes="any" />
+        <link rel="shortcut icon" href="/WidaLOGO.png" />
+        <link rel="apple-touch-icon" href="/WidaLOGO.png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
