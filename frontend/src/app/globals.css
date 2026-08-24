@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    /* ===== WIDA Official Dark Theme Palette (Extracted from wida.sa) ===== */
+    --wida-bg: #0d0614;                   /* Deep Royal Dark Purple Background */
+    --wida-surface: rgba(23, 11, 36, 0.85); /* Glass Card Dark Surface */
+    --wida-surface-hover: rgba(35, 18, 56, 0.95); /* Hover Card State */
+    --wida-border: #2e1847;               /* Subtle Purple Border */
+    --wida-text: #ffffff;                 /* Pure White Primary Text */
+    --wida-text-muted: #a395b8;           /* Muted Light Lavender Text */
+    
+    --wida-primary: #6e4fdc;              /* Brand Primary Purple */
+    --wida-secondary: #9168ea;            /* Brand Secondary Purple */
+    --wida-accent: #e6c8fe;               /* Brand Light Lavender */
+    --link-color: #9168ea;
+
+    --wida-success: #10b981;
+    --wida-warning: #f59e0b;
+    --wida-danger: #ec4899;
+
+    --sidebar-bg: rgba(11, 5, 18, 0.9);
+    --sidebar-border: #231238;
+  }
+
+  * {
+    font-family: 'Alexandria', 'Readex Pro', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  body {
+    background-color: #0d0614;
+    /* Official WIDA website asset hero background image & glowing gradient fallback */
+    background-image: 
+      radial-gradient(circle at 50% 0%, rgba(43, 10, 78, 0.6) 0%, rgba(13, 6, 20, 0.95) 100%),
+      url('https://i0.wp.com/wida.sa/wp-content/uploads/2025/10/Asset-2%402x-scaled.png?fit=2560%2C1440&ssl=1');
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: var(--wida-text);
+    direction: rtl;
+    text-align: right;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  a {
+    color: var(--link-color);
+  }
+}
+
+/* ===== Select & Dropdown Option Styling ===== */
+select option {
+  background-color: #170b24 !important;
+  color: #ffffff !important;
+  padding: 10px;
+}
+
+select {
+  background-color: #170b24 !important;
+  color: #ffffff !important;
+}
+
+/* ===== Glass Cards (Dark Glassmorphism matching wida.sa) ===== */
+.glass-card {
+  background: rgba(23, 11, 36, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--wida-border);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.glass-card-hover:hover {
+  background: rgba(35, 18, 56, 0.95);
+  border-color: var(--wida-primary);
+  box-shadow: 0 8px 30px rgba(110, 79, 220, 0.25);
+  transition: all 0.3s ease;
+}
+
+/* ===== WIDA Gradient Text ===== */
+.wida-gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #e6c8fe 50%, #9168ea 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===== Buttons matching wida.sa ===== */
+.wida-btn {
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: none;
+  transition: all 0.2s ease;
+}
+
+.wida-btn:hover {
+  filter: brightness(1.15);
+  box-shadow: 0 4px 15px rgba(110, 79, 220, 0.3);
+}
+
+.wida-btn:active {
+  filter: brightness(0.9);
+}
+
+/* ===== Scrollbar ===== */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--wida-border);
+  border-radius: 999px;
+}
