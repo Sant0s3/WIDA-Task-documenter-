@@ -180,15 +180,22 @@ export default function AssistantPage() {
     if (!pendingConfirm) return;
 
     try {
-      const activitiesToSave = pendingConfirm.activities.map(act => ({
-        employee_id: act.employee_id,
-        employee_name: act.employee_name,
-        entity_type_id: act.entity_id,
-        action_type_id: act.action_id,
-        quantity: act.quantity,
-        unit: act.unit || 'items',
-        source_text: pendingSourceText
-      }));
+      const activitiesToSave = pendingConfirm.activities
+        .filter(act => (act.employee_id || act.employee_name) && act.entity_id && act.action_id)
+        .map(act => ({
+          employee_id: act.employee_id,
+          employee_name: act.employee_name,
+          entity_type_id: act.entity_id!,
+          action_type_id: act.action_id!,
+          quantity: act.quantity,
+          unit: act.unit || 'items',
+          source_text: pendingSourceText
+        }));
+
+      if (activitiesToSave.length === 0) {
+        alert('لم يتم العثور على أنشطة مكتملة البيانات للحفظ.');
+        return;
+      }
 
       await apiRequest('/api/activities/bulk', 'POST', { activities: activitiesToSave });
       setMessages(prev => [...prev, { role: 'assistant', text: 'تمت إضافتها بنجاح إلى سجل إنجازات الموظفين ولوحة التحكم! 👏' }]);
