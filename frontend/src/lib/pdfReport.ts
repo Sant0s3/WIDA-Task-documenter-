@@ -24,7 +24,7 @@ export function generateWidaPDF(activities: DailyActivity[], periodName: string 
     <tr style="border-bottom: 1px solid #111111;">
       <td style="padding: 10px 14px; font-weight: 700; color: #111111; border-left: 1px solid #111111; vertical-align: top;">${a.employee_name || 'غير محدد'}</td>
       <td style="padding: 10px 14px; color: #111111; font-weight: 600; border-left: 1px solid #111111; vertical-align: top;">
-        تم ${a.action_type_name || ''} (${a.entity_type_name || ''}) بنجاح والجودة ممتازة
+        تم ${a.action_type_name || ''} (${a.entity_type_name || ''})
       </td>
       <td style="padding: 10px 14px; font-weight: 800; color: #581c87; text-align: center; border-left: 1px solid #111111; vertical-align: top;">${a.quantity}</td>
       <td style="padding: 10px 14px; color: #333333; text-align: center; font-size: 11px; vertical-align: top;">${a.activity_date}</td>
@@ -261,7 +261,7 @@ export function generateWidaPDF(activities: DailyActivity[], periodName: string 
         </div>
 
         <!-- Summary Section -->
-        <div class="section-title">ملخص الأداء والإنتاجية:</div>
+        <div class="section-title">ملخص الإنجازات الموثقة:</div>
         <table class="wida-pdf-table" style="margin-bottom: 20px;">
           <thead>
             <tr>
@@ -271,7 +271,7 @@ export function generateWidaPDF(activities: DailyActivity[], periodName: string 
           </thead>
           <tbody>
             <tr style="border-bottom: 1px solid #111111;">
-              <td style="padding: 10px 14px; font-weight: 700; border-left: 1px solid #111111;">إجمالي المخرجات والإنتاجية المسجلة</td>
+              <td style="padding: 10px 14px; font-weight: 700; border-left: 1px solid #111111;">إجمالي المخرجات والإنجازات المسجلة</td>
               <td style="padding: 10px 14px; font-weight: 800; color: #581c87; text-align: center;">${totalQuantity} إنجاز</td>
             </tr>
             <tr style="border-bottom: 1px solid #111111;">
@@ -302,11 +302,11 @@ export function generateWidaPDF(activities: DailyActivity[], periodName: string 
         </table>
 
         <!-- Guidelines / Notes List -->
-        <div class="section-title">ملاحظات واعتمادات الأداء:</div>
+        <div class="section-title">ملاحظات واعتماد التوثيق:</div>
         <ul class="bullet-list">
-          <li>تم استخراج وتوثيق جميع البيانات أعلاه تلقائياً عبر محرك وايدا للذكاء الاصطناعي WIDA Intelligence.</li>
+          <li>تم استخراج وتوثيق جميع البيانات أعلاه تلقائياً عبر نظام وايدا الذكي WIDA Intelligence.</li>
           <li>تُحسب الأنشطة والكميات وفقاً للسجلات اليومية المعتمدة من قِبل منسق العمليات.</li>
-          <li>هذا التقرير معتمد رسمياً وموثق في قاعدة بيانات الشركة.</li>
+          <li>هذا التقرير موثق رسمياً في قاعدة بيانات الشركة لتسجيل الإنجازات اليومية.</li>
         </ul>
       </div>
 
