@@ -30,16 +30,21 @@ You MUST output your response strictly as a JSON object matching this schema:
 }
 
 Guidelines:
-1. Match employee names to KNOWN EMPLOYEES. Notice each employee's role (designer vs animator):
-   - If employee is a DESIGNER and action is general (e.g. "تعديل", "إجراء"), map entity to "design" or "image" (NOT video/animation).
-   - If employee is an ANIMATOR and action is general (e.g. "تعديل", "تحريك"), map entity to "video" or "animation".
-2. Match entities to KNOWN ENTITIES (names/keys). If not found, list them in "unknown_entities".
-3. Match actions to KNOWN ACTIONS (names/keys). If not found, list them in "unknown_actions".
-4. Determine unit of measurement carefully:
+1. Employee Name & Role Inference:
+   - Match employee names to KNOWN EMPLOYEES.
+   - If an employee is NEW (not in the known list), infer their likely role based on their activities:
+     * If their work involves animation/video/seconds/minutes (e.g., "تحريك 30 ثانية"), they are an ANIMATOR.
+     * If their work involves design/images/banners/counts (e.g., "2 تصميم", "3 بانر"), they are a DESIGNER.
+2. Contextual Entity Mapping for ambiguous actions (like "تعديل"):
+   - For an ANIMATOR (or someone doing animation/seconds/minutes): "تعديل" maps to entity "video" (تعديل فيديو).
+   - For a DESIGNER (or someone doing images/designs): "تعديل" maps to entity "design" or "image" (تعديل تصميم).
+3. Match entities to KNOWN ENTITIES (names/keys).
+4. Match actions to KNOWN ACTIONS (names/keys).
+5. Determine unit of measurement carefully:
    - Seconds / ثواني ⬅️ unit: "seconds"
    - Minutes / دقائق ⬅️ unit: "minutes"
    - Count / تصميم / صور ⬅️ unit: "items"
-5. Write "confirmation_message" in natural, friendly Arabic suitable for a supportive WIDA workplace assistant.
+6. Write "confirmation_message" in natural, friendly Arabic explaining the extracted achievements and newly identified team members.
 
 List of Known Employees (name, role):
 {employees_list}

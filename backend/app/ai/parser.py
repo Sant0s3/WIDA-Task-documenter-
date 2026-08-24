@@ -139,11 +139,15 @@ def parse_activity_text(db: Session, text: str) -> AIParseResponse:
                         unknown_employees.append(emp_name)
                     needs_confirmation = True
 
-            # Smart Entity Correction based on Employee Role
+            # Smart Entity Correction based on Employee Role or Unit
             if emp:
-                if emp.role == "designer" and entity_name in ["video", "animation", "تحريك"]:
+                if emp.role == "designer" and entity_name in ["video", "animation"]:
                     entity_name = "design"
-                elif emp.role == "animator" and entity_name in ["design", "image", "تصميم"]:
+                elif emp.role == "animator" and entity_name in ["design", "image"]:
+                    entity_name = "video"
+            else:
+                # For NEW employees, infer role from unit/activity type
+                if unit_val in ["seconds", "minutes"] and entity_name in ["design", "image"]:
                     entity_name = "video"
 
             # Match Entity Type
