@@ -16,23 +16,31 @@ export function generateWidaPDF(activities: DailyActivity[], periodName: string 
   const totalQuantity = activities.reduce((sum, a) => sum + a.quantity, 0);
   const uniqueEmployees = new Set(activities.map(a => a.employee_name || a.employee_id)).size;
 
-  const rowsHtml = activities.length === 0 ? `
+  // Group activities by employee
+  const empGrouped: Record<string, { items: string[]; date: string }> = {};
+  activities.forEach(a => {
+    const empName = a.employee_name || 'غير محدد';
+    if (!empGrouped[empName]) {
+      empGrouped[empName] = { items: [], date: a.activity_date };
+    }
+    const unitText = a.unit === 'seconds' ? 'ثانية' : a.unit === 'minutes' ? 'دقيقة' : 'إنجاز';
+    const detailStr = `تم ${a.action_type_name || ''} (${a.entity_type_name || ''}) ${a.quantity} ${unitText}`;
+    empGrouped[empName].items.push(detailStr);
+  });
+
+  const rowsHtml = Object.keys(empGrouped).length === 0 ? `
     <tr>
-      <td colspan="4" style="text-align: center; padding: 18px; color: #666; font-size: 12px;">لا توجد إنجازات مسجلة لهذه الفترة بعد</td>
+      <td colspan="3" style="text-align: center; padding: 18px; color: #666; font-size: 12px;">لا توجد إنجازات مسجلة لهذه الفترة بعد</td>
     </tr>
-  ` : activities.map((a) => {
-    const unitLabel = a.unit === 'seconds' ? 'ثانية' : a.unit === 'minutes' ? 'دقيقة' : 'إنجاز';
-    return `
+  ` : Object.entries(empGrouped).map(([empName, data]) => `
     <tr style="border-bottom: 1px solid #111111;">
-      <td style="padding: 10px 14px; font-weight: 700; color: #111111; border-left: 1px solid #111111; vertical-align: top;">${a.employee_name || 'غير محدد'}</td>
-      <td style="padding: 10px 14px; color: #111111; font-weight: 600; border-left: 1px solid #111111; vertical-align: top;">
-        تم ${a.action_type_name || ''} (${a.entity_type_name || ''})
+      <td style="padding: 12px 14px; font-weight: 700; color: #111111; border-left: 1px solid #111111; vertical-align: top; width: 30%;">${empName}</td>
+      <td style="padding: 12px 14px; color: #111111; font-weight: 600; border-left: 1px solid #111111; vertical-align: top; width: 50%;">
+        ${data.items.join(' و ')}
       </td>
-      <td style="padding: 10px 14px; font-weight: 800; color: #581c87; text-align: center; border-left: 1px solid #111111; vertical-align: top;">${a.quantity} ${unitLabel}</td>
-      <td style="padding: 10px 14px; color: #333333; text-align: center; font-size: 11px; vertical-align: top;">${a.activity_date}</td>
+      <td style="padding: 12px 14px; color: #333333; text-align: center; font-size: 11px; vertical-align: top; width: 20%;">${data.date}</td>
     </tr>
-  `;
-  }).join('');
+  `).join('');
 
   const htmlContent = `
     <!DOCTYPE html>
@@ -274,10 +282,6 @@ export function generateWidaPDF(activities: DailyActivity[], periodName: string 
           </thead>
           <tbody>
             <tr style="border-bottom: 1px solid #111111;">
-              <td style="padding: 10px 14px; font-weight: 700; border-left: 1px solid #111111;">إجمالي المخرجات والإنجازات المسجلة</td>
-              <td style="padding: 10px 14px; font-weight: 800; color: #581c87; text-align: center;">${totalQuantity} إنجاز</td>
-            </tr>
-            <tr style="border-bottom: 1px solid #111111;">
               <td style="padding: 10px 14px; font-weight: 700; border-left: 1px solid #111111;">عدد الموظفين المساهمين في الإنجاز</td>
               <td style="padding: 10px 14px; font-weight: 800; color: #581c87; text-align: center;">${uniqueEmployees} موظفين</td>
             </tr>
@@ -293,10 +297,9 @@ export function generateWidaPDF(activities: DailyActivity[], periodName: string 
         <table class="wida-pdf-table">
           <thead>
             <tr>
-              <th style="width: 25%;">الموظف المسؤول</th>
-              <th style="width: 45%;">تفاصيل الإنجاز والعملية</th>
-              <th style="width: 15%; text-align: center;">الكمية</th>
-              <th style="width: 15%; text-align: center;">التاريخ</th>
+              <th style="width: 30%;">الموظف المسؤول</th>
+              <th style="width: 50%;">تفاصيل الإنجاز والعمليات</th>
+              <th style="width: 20%; text-align: center;">التاريخ</th>
             </tr>
           </thead>
           <tbody>
