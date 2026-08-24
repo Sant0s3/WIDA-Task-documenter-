@@ -49,7 +49,8 @@ export default function RootLayout({
     <html lang="ar" dir="rtl">
       <head>
         <title>WIDA</title>
-        <meta name="description" content="وايدا AI - نظام إدارة المهام والإنتاجية للمنسق" />
+        <meta name="description" content="وايدا AI - نظام تسجيل الإنجازات والإنتاجية اليومية" />
+        <link rel="icon" href="/WidaLOGO.png" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
