@@ -58,9 +58,9 @@ export default function Dashboard() {
 
   const cardStats = [
     { label: 'إنجازات اليوم', value: data.stats.today_activities, icon: TrendingUp, color: 'text-wida-success' },
-    { label: 'المهام المكتملة', value: data.stats.completed_tasks, icon: CheckSquare, color: 'text-wida-accent' },
-    { label: 'مهام قيد العمل', value: data.stats.in_progress_tasks, icon: Clock, color: 'text-wida-warning' },
-    { label: 'المهام المتأخرة', value: data.stats.overdue_tasks, icon: Calendar, color: 'text-wida-danger' },
+    { label: 'إجمالي الإنتاجية', value: data.stats.total_activities, icon: CheckSquare, color: 'text-wida-accent' },
+    { label: 'إجمالي الموظفين', value: data.stats.total_employees, icon: Users, color: 'text-wida-warning' },
+    { label: 'الموظفين النشطين', value: data.stats.active_employees, icon: Clock, color: 'text-wida-primary' },
   ];
 
   return (

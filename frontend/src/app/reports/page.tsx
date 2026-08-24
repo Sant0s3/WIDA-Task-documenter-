@@ -138,25 +138,7 @@ export default function ReportsPage() {
               </div>
             </div>
 
-            <div className="glass-card p-6 col-span-1">
-              <span className="text-xs text-wida-text-muted">حالة سير المهام</span>
-              <div className="grid grid-cols-3 gap-2 mt-4 text-center">
-                <div className="p-2.5 rounded-lg bg-wida-surface border border-wida-border/40">
-                  <span className="text-[10px] text-wida-text-muted block">اكتملت</span>
-                  <span className="text-base font-bold text-wida-success mt-1 block">{summary.tasks_completed}</span>
-                </div>
-                <div className="p-2.5 rounded-lg bg-wida-surface border border-wida-border/40">
-                  <span className="text-[10px] text-wida-text-muted block">قيد العمل</span>
-                  <span className="text-base font-bold text-wida-warning mt-1 block">{summary.tasks_in_progress}</span>
-                </div>
-                <div className="p-2.5 rounded-lg bg-wida-surface border border-wida-border/40">
-                  <span className="text-[10px] text-wida-text-muted block">متأخرة</span>
-                  <span className="text-base font-bold text-wida-danger mt-1 block">{summary.tasks_overdue}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="glass-card p-6 col-span-1 flex items-center justify-between">
+            <div className="glass-card p-6 col-span-2 flex items-center justify-between">
               <div>
                 <span className="text-xs text-wida-text-muted">إجمالي العمليات المسجلة</span>
                 <h3 className="text-3xl font-bold text-white mt-2">{summary.total_activities} عملية</h3>
