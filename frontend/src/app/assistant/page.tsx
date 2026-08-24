@@ -155,11 +155,13 @@ export default function AssistantPage() {
 
     try {
       const parseResponse = await apiRequest<AIParseResponse>('/api/ai/parse', 'POST', { text: textToSend });
-      setPendingConfirm(parseResponse);
-      setPendingSourceText(textToSend);
+      if (parseResponse.activities && parseResponse.activities.length > 0) {
+        setPendingConfirm(parseResponse);
+        setPendingSourceText(textToSend);
+      }
       setMessages(prev => [...prev, { 
         role: 'assistant', 
-        text: parseResponse.confirmation_message || 'رائع جداً! استخرجت لك الأنشطة المذكورة. يمكنك مراجعتها وتأكيد حفظها من البطاقة الجانبية.',
+        text: parseResponse.confirmation_message || 'أهلاً بك! أنا هنا لمساعدتك والتسجيل لك في أي وقت.',
         parsed: parseResponse
       }]);
     } catch (err: any) {

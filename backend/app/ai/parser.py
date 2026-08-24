@@ -179,23 +179,27 @@ def parse_activity_text(db: Session, text: str) -> AIParseResponse:
         critical_missing = bool(unknown_entities or unknown_actions)
         needs_confirmation = critical_missing
 
-        if unknown_employees and not critical_missing:
-            names_str = ", ".join(unknown_employees)
-            conf_msg = f"تم استخراج الإنجازات بنجاح. سيتم إضافة ({names_str}) تلقائياً كـ (مصمم Designer أو محرك Animator بناءً على نوع العمل) عند التثبيت."
-        elif critical_missing:
-            msg_parts = []
-            if unknown_entities:
-                msg_parts.append(f"نوع إنجاز غير معروف: {', '.join(unknown_entities)}")
-            if unknown_actions:
-                msg_parts.append(f"نوع إجراء غير معروف: {', '.join(unknown_actions)}")
-            conf_msg = " | ".join(msg_parts)
-        else:
-            conf_msg = "رائع جداً! تم استخراج جميع الأنشطة المذكورة بنجاح."
+        if not conf_msg:
+            if unknown_employees and not critical_missing:
+                names_str = ", ".join(unknown_employees)
+                conf_msg = f"تم استخراج الإنجازات بنجاح. سيتم إضافة ({names_str}) تلقائياً عند التثبيت."
+            elif critical_missing:
+                msg_parts = []
+                if unknown_entities:
+                    msg_parts.append(f"نوع إنجاز غير معروف: {', '.join(unknown_entities)}")
+                if unknown_actions:
+                    msg_parts.append(f"نوع إجراء غير معروف: {', '.join(unknown_actions)}")
+                conf_msg = " | ".join(msg_parts)
+            else:
+                conf_msg = "أهلاً بك! أنا هنا لمساعدتك في أي وقت."
+
+        # If no activities parsed at all, do not open confirmation side card
+        has_activities = bool(parsed_activities)
 
         return AIParseResponse(
             success=True,
-            activities=parsed_activities,
-            needs_confirmation=needs_confirmation,
+            activities=parsed_activities if has_activities else [],
+            needs_confirmation=needs_confirmation if has_activities else False,
             confirmation_message=conf_msg,
             unknown_employees=unknown_employees,
             unknown_entities=unknown_entities,
