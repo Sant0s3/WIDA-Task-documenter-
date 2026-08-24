@@ -40,7 +40,7 @@ def parse_activity_text(db: Session, text: str) -> AIParseResponse:
     entities = db.query(EntityType).all()
     actions = db.query(ActionType).all()
 
-    emp_list_str = "\n".join([f"- {emp.name} (ID: {emp.id})" for emp in employees])
+    emp_list_str = "\n".join([f"- {emp.name} (Role: {emp.role}, ID: {emp.id})" for emp in employees])
     ent_list_str = "\n".join([f"- {ent.name}: {ent.display_name} (ID: {ent.id})" for ent in entities])
     act_list_str = "\n".join([f"- {act.name}: {act.display_name} (ID: {act.id})" for act in actions])
 
@@ -138,6 +138,13 @@ def parse_activity_text(db: Session, text: str) -> AIParseResponse:
                     if emp_name not in unknown_employees:
                         unknown_employees.append(emp_name)
                     needs_confirmation = True
+
+            # Smart Entity Correction based on Employee Role
+            if emp:
+                if emp.role == "designer" and entity_name in ["video", "animation", "تحريك"]:
+                    entity_name = "design"
+                elif emp.role == "animator" and entity_name in ["design", "image", "تصميم"]:
+                    entity_name = "video"
 
             # Match Entity Type
             ent = db.query(EntityType).filter(

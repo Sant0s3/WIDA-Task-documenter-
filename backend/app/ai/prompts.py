@@ -30,7 +30,9 @@ You MUST output your response strictly as a JSON object matching this schema:
 }
 
 Guidelines:
-1. Match employee names to the list of KNOWN EMPLOYEES. If not found, list them in "unknown_employees".
+1. Match employee names to KNOWN EMPLOYEES. Notice each employee's role (designer vs animator):
+   - If employee is a DESIGNER and action is general (e.g. "تعديل", "إجراء"), map entity to "design" or "image" (NOT video/animation).
+   - If employee is an ANIMATOR and action is general (e.g. "تعديل", "تحريك"), map entity to "video" or "animation".
 2. Match entities to KNOWN ENTITIES (names/keys). If not found, list them in "unknown_entities".
 3. Match actions to KNOWN ACTIONS (names/keys). If not found, list them in "unknown_actions".
 4. Determine unit of measurement carefully:
@@ -39,7 +41,7 @@ Guidelines:
    - Count / تصميم / صور ⬅️ unit: "items"
 5. Write "confirmation_message" in natural, friendly Arabic suitable for a supportive WIDA workplace assistant.
 
-List of Known Employees:
+List of Known Employees (name, role):
 {employees_list}
 
 List of Known Entities (name: display_name):
