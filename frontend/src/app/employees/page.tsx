@@ -116,7 +116,7 @@ export default function EmployeesPage() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  placeholder="مثال: عبدالرحمن الشهري"
+                  placeholder="الاسم"
                   className="w-full px-4 py-2.5 rounded-lg bg-wida-surface border border-wida-border text-white text-sm focus:outline-none focus:border-wida-primary"
                 />
               </div>
