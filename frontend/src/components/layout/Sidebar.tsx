@@ -18,7 +18,7 @@ export default function Sidebar() {
   const { logout, username } = useAuth();
 
   const menuItems = [
-    { name: 'لوحة التحكم', href: '/', icon: LayoutDashboard },
+    { name: 'لوحة المتابعة', href: '/', icon: LayoutDashboard },
     { name: 'سجل الإنجازات', href: '/tasks', icon: TrendingUp },
     { name: 'الموظفين', href: '/employees', icon: Users },
     { name: 'المساعد الذكي', href: '/assistant', icon: MessageSquare },

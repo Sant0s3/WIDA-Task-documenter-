@@ -65,7 +65,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <Header title="لوحة التحكم" />
+      <Header title="لوحة المتابعة" />
 
       <div className="mt-8 space-y-8">
         {/* Statistics Cards */}
